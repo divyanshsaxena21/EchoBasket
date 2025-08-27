@@ -1,38 +1,77 @@
+import pyttsx3
+import speech_recognition as sr
+import nltk
+from nltk.tokenize import word_tokenize
+nltk.download('punkt', quiet=True)
 from cart import Cart
 
 def main():
+	engine = pyttsx3.init()
+	recognizer = sr.Recognizer()
+
+	def speak(text):
+		engine.say(text)
+		engine.runAndWait()
+
+	def listen():
+		with sr.Microphone() as source:
+			print("Listening...")
+			audio = recognizer.listen(source)
+		try:
+			text = recognizer.recognize_google(audio)
+			print(f"You said: {text}")
+			return text
+		except sr.UnknownValueError:
+			print("Could not understand audio.")
+			speak("Could not understand audio. Please type your response.")
+			return input("Type your response: ")
+		except sr.RequestError as e:
+			print(f"Error with speech recognition service: {e}")
+			speak("Speech recognition service error. Please type your response.")
+			return input("Type your response: ")
 	cart = Cart()
 	while True:
 		print("\nOptions: add, delete, show, search, exit")
-		choice = input("Enter option: ").strip().lower()
-		if choice == "add":
-			item_name = input("Enter item name to add: ")
-			quantity = input("Enter quantity: ")
+		speak("What would you like to do? You can say add, delete, show, search, or exit.")
+		choice = listen().strip().lower()
+		tokens = word_tokenize(choice)
+		if "add" in tokens:
+			speak("Say the item name to add.")
+			item_name = listen()
+			speak("Say the quantity.")
+			quantity = listen()
 			try:
 				quantity = int(quantity)
 			except ValueError:
-				print("Invalid quantity. Must be a number.")
+				speak("Invalid quantity. Must be a number.")
 				continue
 			cart.add_item(item_name, quantity)
-		elif choice == "delete":
-			item_name = input("Enter item name to delete: ")
-			quantity = input("Enter quantity: ")
+			speak(f"Added {item_name} {quantity} to cart.")
+		elif "delete" in tokens:
+			speak("Say the item name to delete.")
+			item_name = listen()
+			speak("Say the quantity.")
+			quantity = listen()
 			try:
 				quantity = int(quantity)
 			except ValueError:
-				print("Invalid quantity. Must be a number.")
+				speak("Invalid quantity. Must be a number.")
 				continue
 			cart.delete_item(item_name, quantity)
-		elif choice == "show":
+			speak(f"Deleted {item_name} {quantity} from cart.")
+		elif "show" in tokens:
 			cart.show_cart()
-		elif choice == "search":
-			query = input("Enter search query: ")
+			speak("Showing cart.")
+		elif "search" in tokens:
+			speak("Say your search query.")
+			query = listen()
 			cart.search_item(query)
-		elif choice == "exit":
+		elif "exit" in tokens:
+			speak("Exiting.")
 			print("Exiting...")
 			break
 		else:
-			print("Invalid option. Try again.")
+			speak("Invalid option. Try again.")
 
 if __name__ == "__main__":
 	main()
