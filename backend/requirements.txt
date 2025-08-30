@@ -5,3 +5,5 @@ gtts
 SpeechRecognition
 assemblyai
 openai
+gunicorn
+uvicorn
