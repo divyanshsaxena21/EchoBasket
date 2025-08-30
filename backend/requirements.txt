@@ -7,3 +7,4 @@ assemblyai
 openai
 gunicorn
 uvicorn
+flask-cors
