@@ -1,0 +1,10 @@
+Flask
+firebase-admin
+python-dotenv
+gtts
+SpeechRecognition
+assemblyai
+openai
+gunicorn
+uvicorn
+flask-cors
