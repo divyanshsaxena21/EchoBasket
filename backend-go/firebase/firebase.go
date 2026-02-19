@@ -23,31 +23,40 @@ var (
 func Initialize() error {
 	ctx := context.Background()
 
-	// Resolve service account path
-	credPath := config.AppConfig.FirebaseServiceAccountPath
+	var opt option.ClientOption
 
-	// Try multiple locations to find the credential file
-	possiblePaths := []string{
-		credPath,                           // As specified
-		filepath.Join("..", credPath),      // Relative to parent
-		"firebase-service-account.json",    // Current directory
-		filepath.Base(credPath),            // Just the filename
-	}
+	// Check if credentials are provided as JSON string in env var
+	credJSON := os.Getenv("FIREBASE_SERVICE_ACCOUNT_JSON")
+	if credJSON != "" {
+		log.Println("Using Firebase credentials from environment variable")
+		opt = option.WithCredentialsJSON([]byte(credJSON))
+	} else {
+		// Fall back to file-based credentials
+		credPath := config.AppConfig.FirebaseServiceAccountPath
 
-	foundPath := ""
-	for _, p := range possiblePaths {
-		if _, err := os.Stat(p); err == nil {
-			foundPath = p
-			break
+		// Try multiple locations to find the credential file
+		possiblePaths := []string{
+			credPath,                        // As specified
+			filepath.Join("..", credPath),   // Relative to parent
+			"firebase-service-account.json", // Current directory
+			filepath.Base(credPath),         // Just the filename
 		}
-	}
 
-	if foundPath == "" {
-		log.Fatalf("Firebase credential file not found. Tried: %v", possiblePaths)
-	}
-	credPath = foundPath
+		foundPath := ""
+		for _, p := range possiblePaths {
+			if _, err := os.Stat(p); err == nil {
+				foundPath = p
+				break
+			}
+		}
 
-	opt := option.WithCredentialsFile(credPath)
+		if foundPath == "" {
+			log.Fatalf("Firebase credential file not found. Tried: %v\nAlternatively, set FIREBASE_SERVICE_ACCOUNT_JSON env var with the JSON content.", possiblePaths)
+		}
+
+		log.Printf("Using Firebase credentials from file: %s", foundPath)
+		opt = option.WithCredentialsFile(foundPath)
+	}
 
 	conf := &firebase.Config{
 		DatabaseURL:   config.AppConfig.FirebaseDatabaseURL,
@@ -72,7 +81,6 @@ func Initialize() error {
 	}
 
 	log.Println("✅ Firebase initialized")
-	log.Printf("Service account path: %s", credPath)
 
 	return nil
 }
