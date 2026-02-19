@@ -1,135 +1,226 @@
-EchoBasket
+# 🛒 EchoBasket
 
-EchoBasket is a voice-controlled shopping cart system that allows users to manage their cart entirely via voice commands. By leveraging voice recognition technology, it provides a seamless and hands-free shopping experience. Additionally, EchoBasket offers personalized suggestions based on seasonal trends or the items already present in the cart, ensuring you never miss out on popular or timely products!
+<div align="center">
 
-Key Features
+![Go](https://img.shields.io/badge/Go-1.21+-00ADD8?style=for-the-badge&logo=go&logoColor=white)
+![React](https://img.shields.io/badge/React-18+-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 
-Voice-Activated Cart Management: Add, remove, and modify items in your cart using simple voice commands.
+**A voice-controlled smart shopping assistant powered by AI**
 
-Personalized Suggestions: Get smart, seasonally relevant suggestions based on the contents of your cart or current trends.
+[Live Demo](https://echobasket.onrender.com) • [Report Bug](https://github.com/divyanshsaxena21/EchoBasket/issues) • [Request Feature](https://github.com/divyanshsaxena21/EchoBasket/issues)
 
-User-Friendly Interface: Designed for easy interaction and optimized for a voice-driven experience.
+</div>
 
-CRUD Operations: Handle all shopping cart operations (Create, Read, Update, Delete) through voice.
+---
 
-Real-Time Feedback: Get instant feedback on cart updates and suggestions.
+## ✨ Features
 
-Installation
-Prerequisites
+| Feature | Description |
+|---------|-------------|
+| 🎤 **Voice Commands** | Add, remove, and manage cart items hands-free |
+| 🤖 **AI Suggestions** | Get personalized recommendations based on cart contents and season |
+| 🔊 **Voice Responses** | Hear confirmations and suggestions via text-to-speech |
+| 📱 **Real-time Sync** | Cart syncs instantly across devices with Firebase |
+| 🌐 **RESTful API** | Fast Go backend with Gin framework |
 
-Before getting started, make sure you have the following installed:
+---
 
-Python 3.x
+## 🏗️ Architecture
 
-Node.js (if applicable for frontend or server-related tasks)
+```
+EchoBasket/
+├── 🔧 backend-go/          # Go API Server
+│   ├── config/             # Environment configuration
+│   ├── firebase/           # Firebase Admin SDK integration
+│   ├── handlers/           # Route handlers (cart, speech, suggestions)
+│   ├── middleware/         # Auth middleware
+│   ├── utils/              # NLP utilities
+│   └── main.go             # Application entry point
+│
+├── 🎨 frontend/            # React + TypeScript + Vite
+│   ├── src/
+│   │   ├── components/     # UI components
+│   │   ├── pages/          # Page views
+│   │   └── services/       # API client
+│   └── public/
+│
+└── 📄 .env                 # Shared environment variables
+```
 
-A working microphone for voice recognition.
+---
 
-Steps
+## 🚀 Quick Start
 
-Clone the repository:
+### Prerequisites
 
+- **Go** 1.21+
+- **Node.js** 18+
+- **Firebase** project with Realtime Database
+
+### 1️⃣ Clone the Repository
+
+```bash
 git clone https://github.com/divyanshsaxena21/EchoBasket.git
 cd EchoBasket
+```
 
+### 2️⃣ Configure Environment
 
-Install dependencies:
+Create a `.env` file in the project root:
 
-For Python-based environments, install the necessary Python packages:
+```env
+# Backend (Go)
+FIREBASE_SERVICE_ACCOUNT_PATH=firebase-service-account.json
+FIREBASE_DATABASE_URL=https://your-project-default-rtdb.firebaseio.com
+FIREBASE_PROJECT_ID=your-project-id
+FIREBASE_STORAGE_BUCKET=your-project.appspot.com
+GROQ_API_KEY=your-groq-api-key
+ASSEMBLYAI_API_KEY=your-assemblyai-api-key
+MURFAI_API_KEY=your-murfai-api-key
+PORT=5000
 
-pip install -r requirements.txt
+# Frontend (Vite)
+VITE_FIREBASE_API_KEY=your-firebase-api-key
+VITE_FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+VITE_FIREBASE_DATABASE_URL=https://your-project-default-rtdb.firebaseio.com
+VITE_FIREBASE_PROJECT_ID=your-project-id
+VITE_API_BASE_URL=http://localhost:5000
+```
 
+### 3️⃣ Start the Backend
 
-If you're using a JavaScript frontend (React, for instance), navigate to the frontend folder and install dependencies:
+```bash
+cd backend-go
+go mod tidy
+go run main.go
+```
 
+### 4️⃣ Start the Frontend
+
+```bash
 cd frontend
 npm install
+npm run dev
+```
 
+Visit **http://localhost:5173** 🎉
 
-Set up the voice recognition API:
+---
 
-You'll need a voice recognition service. We recommend using Google Speech-to-Text
- or Mozilla's DeepSpeech
-.
+## 🔌 API Endpoints
 
-Set up your credentials or install the required dependencies based on the API you choose.
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/cart` | Get cart items |
+| `POST` | `/cart` | Add item to cart |
+| `PUT` | `/cart/:id` | Update cart item |
+| `DELETE` | `/cart/:id` | Remove cart item |
+| `POST` | `/suggestions` | Get AI-powered suggestions |
+| `POST` | `/stt` | Speech-to-text transcription |
+| `POST` | `/tts` | Text-to-speech synthesis |
+| `POST` | `/search` | Search cart items |
 
-Run the application:
+---
 
-For backend and frontend:
+## 🎤 Voice Commands
 
-python app.py  # or your main backend entry script
-npm start  # If you have a React frontend, or start your chosen frontend framework
+| Command | Action |
+|---------|--------|
+| *"Add milk to my cart"* | Adds milk with quantity 1 |
+| *"Add 3 apples"* | Adds 3 apples |
+| *"Remove bread"* | Removes bread from cart |
+| *"What's in my cart?"* | Lists cart contents |
+| *"Give me suggestions"* | AI suggests items based on cart & season |
 
+---
 
-The voice-enabled cart should now be ready to use!
+## 🛠️ Tech Stack
 
-Usage
-Voice Commands
+### Backend
+- **[Go](https://golang.org/)** - Fast, compiled language
+- **[Gin](https://gin-gonic.com/)** - HTTP web framework
+- **[Firebase Admin SDK](https://firebase.google.com/docs/admin/setup)** - Authentication & Realtime Database
 
-Once the application is running, you can use the following voice commands:
+### Frontend
+- **[React 18](https://react.dev/)** - UI library
+- **[TypeScript](https://www.typescriptlang.org/)** - Type safety
+- **[Vite](https://vitejs.dev/)** - Build tool
+- **[Axios](https://axios-http.com/)** - HTTP client
 
-Add an item to the cart:
-Add [item] to my cart
+### AI Services
+- **[Groq](https://groq.com/)** - LLM for suggestions & responses
+- **[AssemblyAI](https://www.assemblyai.com/)** - Speech-to-text
+- **[Murf AI](https://murf.ai/)** - Text-to-speech
 
-Remove an item from the cart:
-Remove [item] from my cart
+---
 
-View cart contents:
-What’s in my cart?
+## 🌐 Deployment
 
-Clear the cart:
-Clear my cart
+### Backend (Render)
 
-Get suggestions:
-Give me suggestions for this season
+1. Create a new **Web Service** on [Render](https://render.com)
+2. Connect your GitHub repository
+3. Configure:
+   - **Root Directory:** `./backend-go`
+   - **Build Command:** `go build -o server main.go`
+   - **Start Command:** `./server`
+4. Add environment variables (including `FIREBASE_SERVICE_ACCOUNT_JSON`)
 
-Feel free to experiment with natural language variations!
+### Frontend (Vercel/Netlify)
 
-Features Roadmap
+1. Connect your repository
+2. Set root directory to `frontend`
+3. Add `VITE_API_BASE_URL` pointing to your backend URL
 
-Enhanced Voice Recognition: Improve the accuracy of voice commands in noisy environments.
+---
 
-Real-time Seasonal Data: Integrate dynamic APIs for seasonal product suggestions (weather-based, fashion trends, etc.).
+## 📋 Roadmap
 
-User Authentication: Add support for user logins and personalized cart management.
+- [x] Voice-controlled cart management
+- [x] AI-powered suggestions with Groq
+- [x] Speech-to-text with AssemblyAI
+- [x] Text-to-speech responses
+- [x] Go backend migration
+- [ ] User authentication
+- [ ] Multi-language support
+- [ ] Smart home integration (Alexa, Google Home)
+- [ ] Mobile app (React Native)
 
-Cross-Platform Support: Expand the project to be usable on mobile devices or smart home assistants (e.g., Alexa, Google Home).
+---
 
-Collaborative Carts: Allow multiple users to add or remove items in the same cart.
+## 🤝 Contributing
 
-Contributing
+Contributions are welcome! Here's how:
 
-We welcome contributions to EchoBasket! Here’s how you can help:
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-Fork the repository.
+---
 
-Create a new branch for your feature (git checkout -b feature-name).
+## 📄 License
 
-Make your changes and commit them (git commit -m 'Add feature').
+Distributed under the **MIT License**. See `LICENSE` for more information.
 
-Push your changes to your forked repository (git push origin feature-name).
+---
 
-Open a pull request with a clear description of the changes you've made.
+## 📬 Contact
 
-For any issues or bug reports, feel free to open an issue
-.
+**Divyansh Saxena**
 
-License
+[![Email](https://img.shields.io/badge/Email-divyansh__saxena%40yahoo.com-red?style=flat-square&logo=yahoo)](mailto:divyansh_saxena@yahoo.com)
+[![GitHub](https://img.shields.io/badge/GitHub-divyanshsaxena21-black?style=flat-square&logo=github)](https://github.com/divyanshsaxena21)
 
-This project is licensed under the MIT License – see the LICENSE
- file for details.
+---
 
-Contact
+<div align="center">
 
-For further questions or support, feel free to reach out at:
-Email: [divyansh_saxena@yahoo.com]
-GitHub: divyanshsaxena21
+**⭐ Star this repo if you find it helpful!**
 
-Acknowledgements
+Made with ❤️ by [Divyansh Saxena](https://github.com/divyanshsaxena21)
 
-Voice Recognition Libraries: Thank you to Google Speech-to-Text
- and Mozilla DeepSpeech
- for enabling seamless voice interactions.
-
-Seasonal Data Providers: Contributions from various open APIs for real-time seasonal recommendations.
+</div>
