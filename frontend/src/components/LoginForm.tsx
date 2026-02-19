@@ -3,7 +3,7 @@ import { auth } from '../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 interface Props {
-  onLogin: (token: string) => void;
+  onLogin: () => void;
 }
 
 export default function LoginForm({ onLogin }: Props) {
@@ -16,13 +16,8 @@ export default function LoginForm({ onLogin }: Props) {
     setError(null);
     setLoading(true);
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, form.email, form.password);
-      const user = userCredential.user;
-      if (user) {
-        const token = await user.getIdToken();
-        localStorage.setItem('token', token);
-        onLogin(token);
-      }
+      await signInWithEmailAndPassword(auth, form.email, form.password);
+      onLogin();
     } catch {
       setError('Login failed: Invalid email or password');
     } finally {

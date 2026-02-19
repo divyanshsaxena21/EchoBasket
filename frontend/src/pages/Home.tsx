@@ -2,11 +2,7 @@ import VoiceInput from '../components/VoiceInput';
 import ShoppingList from '../components/ShoppingList';
 import Suggestions from '../components/Suggestions';
 
-interface Props {
-  onLogout: () => void;
-}
-
-export default function Home({ onLogout }: Props) {
+export default function Home() {
   return (
     <div
       style={{
@@ -48,30 +44,6 @@ export default function Home({ onLogout }: Props) {
         >
           🗣️ Voice Shopping Assistant
         </h1>
-        <button
-          onClick={onLogout}
-          style={{
-            backgroundColor: '#ef4444',
-            color: 'white',
-            border: 'none',
-            borderRadius: 12,
-            padding: '0.5em 1.5em',
-            fontWeight: 700,
-            fontSize: '1rem',
-            cursor: 'pointer',
-            transition: 'background-color 0.3s ease',
-            boxShadow: '0 4px 8px rgba(239, 68, 68, 0.4)',
-            userSelect: 'none',
-          }}
-          onMouseEnter={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#dc2626';
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#ef4444';
-          }}
-        >
-          Logout
-        </button>
       </header>
 
       {/* Main content */}

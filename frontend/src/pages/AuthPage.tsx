@@ -3,7 +3,7 @@ import SignupForm from '../components/SignupForm';
 import LoginForm from '../components/LoginForm';
 
 interface Props {
-  onLogin: (token: string) => void;
+  onLogin: () => void;
 }
 
 export default function AuthPage({ onLogin }: Props) {

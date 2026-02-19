@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { auth } from '../firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 interface Props {
-  onLogin: (token: string) => void;
+  onLogin: () => void;
 }
 
 export default function SignupForm({ onLogin }: Props) {
@@ -16,16 +16,9 @@ export default function SignupForm({ onLogin }: Props) {
     setError(null);
     setLoading(true);
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, form.email, form.password);
-      const user = userCredential.user;
-      if (user) {
-        // Optionally sign in after signup
-        const loginCredential = await signInWithEmailAndPassword(auth, form.email, form.password);
-        const loginUser = loginCredential.user;
-        const token = await loginUser.getIdToken();
-        localStorage.setItem('token', token);
-        onLogin(token);
-      }
+      await createUserWithEmailAndPassword(auth, form.email, form.password);
+      // Firebase auth state change will trigger onLogin automatically
+      onLogin();
     } catch {
       setError('Signup failed: Please check your email and password');
     } finally {
