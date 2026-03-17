@@ -9,7 +9,7 @@
 
 **A voice-controlled smart shopping assistant powered by AI**
 
-[Live Demo](https://echobasket.onrender.com) • [Report Bug](https://github.com/divyanshsaxena21/EchoBasket/issues) • [Request Feature](https://github.com/divyanshsaxena21/EchoBasket/issues)
+[Live Demo](https://echo-basket-orpin.vercel.app/) • [Report Bug](https://github.com/divyanshsaxena21/EchoBasket/issues) • [Request Feature](https://github.com/divyanshsaxena21/EchoBasket/issues)
 
 </div>
 
